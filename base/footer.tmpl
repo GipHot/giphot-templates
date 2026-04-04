@@ -247,6 +247,62 @@
 	            localStorage.setItem('giphot-welcome-seen', 'true');
 	            document.getElementById('giphot-modal-wrapper').style.display = 'none';
 	        });
+
+	        fetch('https://cdn.lutit.xyz/giphot/config.json')
+	            .then(r => r.json())
+	            .then(data => {
+	                if (data.global && data.global.ssh_available === false) {
+	                    const sshCloneBtn = document.getElementById('repo-clone-ssh');
+	                    if (sshCloneBtn) sshCloneBtn.style.display = 'none';
+	                    const httpsCloneBtn = document.getElementById('repo-clone-https');
+	                    if (httpsCloneBtn && sshCloneBtn && sshCloneBtn.classList.contains('active')) {
+	                        httpsCloneBtn.click();
+	                    }
+	                    document.querySelectorAll('button').forEach(btn => {
+	                        if (btn.textContent.includes('SSH')) btn.style.display = 'none';
+	                    });
+	                    document.querySelectorAll('a[href*="/settings/keys"]').forEach(a => {
+	                        if (a.textContent.includes('SSH')) a.style.display = 'none';
+	                    });
+	                }
+
+	                const pathParts = window.location.pathname.split('/');
+	                if (pathParts.length >= 3) {
+	                    const repoName = pathParts[2];
+	                    if (data.repos && data.repos[repoName]) {
+	                        const repoData = data.repos[repoName];
+	                        
+	                        if (repoData.stars !== undefined) {
+	                            document.querySelectorAll('a[href$="/stars"]').forEach(el => el.textContent = repoData.stars);
+	                        }
+	                        if (repoData.watches !== undefined) {
+	                            document.querySelectorAll('a[href$="/watchers"]').forEach(el => el.textContent = repoData.watches);
+	                        }
+	                        if (repoData.forks !== undefined) {
+	                            document.querySelectorAll('a[href$="/forks"]').forEach(el => el.textContent = repoData.forks);
+	                        }
+	                        
+	                        const titleLinks = document.querySelectorAll('.repo-header .flex-item-title a');
+	                        const titleLink = titleLinks.length > 1 ? titleLinks[titleLinks.length - 1] : null;
+	                        
+	                        if (titleLink) {
+	                            if (repoData.name) {
+	                                titleLink.textContent = repoData.name;
+	                            }
+	                            if (repoData.is_halal) {
+	                                const badge = document.createElement('span');
+	                                badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/2705.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;" title="Официально ХАЛЯЛЬ">';
+	                                titleLink.parentNode.appendChild(badge);
+	                            } else if (repoData.is_haram) {
+	                                const badge = document.createElement('span');
+	                                badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/274c.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;" title="Официально ХАРАМ">';
+	                                titleLink.parentNode.appendChild(badge);
+	                            }
+	                        }
+	                    }
+	                }
+	            })
+	            .catch(console.error);
 	    });
 	</script>
 </body>
