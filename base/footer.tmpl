@@ -291,15 +291,45 @@
 	                            }
 	                            if (repoData.is_halal) {
 	                                const badge = document.createElement('span');
-	                                badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/2705.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;" title="Официально ХАЛЯЛЬ">';
+	                                badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/2705.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;"> <span style="vertical-align: middle; margin-left: 4px; font-size: 0.85em; font-weight: bold; color: #3fb950;">Официально ХАЛЯЛЬ</span>';
 	                                titleLink.parentNode.appendChild(badge);
 	                            } else if (repoData.is_haram) {
 	                                const badge = document.createElement('span');
-	                                badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/274c.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;" title="Официально ХАРАМ">';
+	                                badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/274c.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;"> <span style="vertical-align: middle; margin-left: 4px; font-size: 0.85em; font-weight: bold; color: #f85149;">Официально ХАРАМ</span>';
 	                                titleLink.parentNode.appendChild(badge);
 	                            }
 	                        }
 	                    }
+	                }
+
+	                if (data.repos) {
+	                    Object.keys(data.repos).forEach(repoId => {
+	                        const repoData = data.repos[repoId];
+	                        document.querySelectorAll('a.name').forEach(link => {
+	                            const hrefAttr = link.getAttribute('href');
+	                            if (hrefAttr) {
+	                                const hrefParts = hrefAttr.split('/');
+	                                if (hrefParts.length >= 2 && hrefParts[hrefParts.length - 1] === repoId) {
+	                                    if (repoData.name) {
+	                                        link.textContent = repoData.name;
+	                                    }
+	                                    if (!link.parentNode.querySelector('.giphot-badge')) {
+	                                        if (repoData.is_halal) {
+	                                            const badge = document.createElement('span');
+	                                            badge.className = 'giphot-badge';
+	                                            badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/2705.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;"> <span style="vertical-align: middle; margin-left: 4px; font-size: 0.85em; font-weight: bold; color: #3fb950;">Официально ХАЛЯЛЬ</span>';
+	                                            link.parentNode.appendChild(badge);
+	                                        } else if (repoData.is_haram) {
+	                                            const badge = document.createElement('span');
+	                                            badge.className = 'giphot-badge';
+	                                            badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/274c.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;"> <span style="vertical-align: middle; margin-left: 4px; font-size: 0.85em; font-weight: bold; color: #f85149;">Официально ХАРАМ</span>';
+	                                            link.parentNode.appendChild(badge);
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                        });
+	                    });
 	                }
 	            })
 	            .catch(console.error);
