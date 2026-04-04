@@ -16,7 +16,11 @@
 							{{.Title}}
 						</h3>
 						<div class="description">
-							{{ctx.Locale.Tr (printf "migrate.%s.description" .Name)}}
+							{{if eq .Name "github"}}
+								haram!!!! microslop govno ☝✅
+							{{else}}
+								{{ctx.Locale.Tr (printf "migrate.%s.description" .Name)}}
+							{{end}}
 						</div>
 					</div>
 				</a>
