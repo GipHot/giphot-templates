@@ -16,5 +16,238 @@
 	<script src="{{AssetUrlPrefix}}/js/index.js?v={{AssetVersion}}" onerror="alert('{{ctx.Locale.Tr "alert.asset_load_failed"}}'.replace('{path}', this.src))"></script>
 
 	{{template "custom/footer" .}}
+
+	<style>
+	#giphot-modal-wrapper .backdrop {
+	    position: fixed;
+	    inset: 0;
+	    background: rgba(23, 23, 23, 0.8);
+	    z-index: 9998;
+	}
+	#giphot-modal-wrapper .modal {
+	    position: fixed;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    width: min(720px, calc(100vw - 2rem));
+	    max-height: min(85vh, 700px);
+	    background: #24292f;
+	    border: 1px solid #70757d;
+	    border-radius: 0;
+	    color: #eef1f4;
+	    z-index: 9999;
+	    font-family: 'Mona Sans', 'Inter', sans-serif;
+	    box-sizing: border-box;
+	    display: flex;
+	    flex-direction: column;
+	    padding: 0;
+	}
+	#giphot-modal-wrapper .modal-header {
+	    padding: 1.5rem 1.5rem 1rem;
+	    flex-shrink: 0;
+	}
+	#giphot-modal-wrapper .title {
+	    font-size: 1.5rem;
+	    margin: 0;
+	    font-weight: 600;
+	    letter-spacing: 0.01em;
+	}
+	#giphot-modal-wrapper .text-container {
+	    padding: 0 1.5rem;
+	    overflow-y: auto;
+	    flex-grow: 1;
+	}
+	#giphot-modal-wrapper .text {
+	    font-size: 0.95rem;
+	    line-height: 1.6;
+	    color: #d2d7df;
+	    margin: 0 0 1rem;
+	}
+	#giphot-modal-wrapper .text h3 {
+	    font-size: 1.1rem;
+	    color: #ffffff;
+	    margin: 1.5rem 0 0.5rem;
+	}
+	#giphot-modal-wrapper .text ul, #giphot-modal-wrapper .text ol {
+	    margin: 0.5rem 0 1rem;
+	    padding-left: 1.5rem;
+	}
+	#giphot-modal-wrapper .text li {
+	    margin-bottom: 0.25rem;
+	}
+	#giphot-modal-wrapper .text p {
+	    margin: 0 0 1rem;
+	}
+	#giphot-modal-wrapper .text strong {
+	    color: #ffffff;
+	    font-weight: 600;
+	}
+	#giphot-modal-wrapper .modal-footer {
+	    padding: 1rem 1.5rem 1.5rem;
+	    flex-shrink: 0;
+	}
+	#giphot-modal-wrapper .actions {
+	    display: flex;
+	    gap: 0.85rem;
+	}
+	#giphot-modal-wrapper .actions button {
+	    flex: 1;
+	}
+	#giphot-modal-wrapper .reset,
+	#giphot-modal-wrapper .save {
+	    height: 40px;
+	    border-radius: 0;
+	    font-size: 0.9rem;
+	    font-weight: 600;
+	    cursor: pointer;
+	    text-align: center;
+	    box-sizing: border-box;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	}
+	#giphot-modal-wrapper .reset {
+	    background: transparent;
+	    color: #f1f3f5;
+	    border: 1px solid #9aa0a6;
+	}
+	#giphot-modal-wrapper .reset:hover {
+	    border-color: #ffffff;
+	    color: #ffffff;
+	}
+	#giphot-modal-wrapper .save {
+	    background: #e9eaec;
+	    color: #1b1e24;
+	    border: 1px solid #e9eaec;
+	}
+	#giphot-modal-wrapper .save:hover {
+	    background: #ffffff;
+	}
+	#giphot-toast-container {
+	    position: fixed;
+	    top: 20px;
+	    right: 20px;
+	    z-index: 10000;
+	    display: flex;
+	    flex-direction: column;
+	    gap: 10px;
+	}
+	.giphot-toast {
+	    background: #cf222e;
+	    color: white;
+	    padding: 1rem;
+	    border-radius: 4px;
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+	    font-family: 'Mona Sans', 'Inter', sans-serif;
+	    font-weight: 600;
+	    animation: slideIn 0.3s ease-out forwards;
+	    max-width: 400px;
+	}
+	@keyframes slideIn {
+	    from { transform: translateX(100%); opacity: 0; }
+	    to { transform: translateX(0); opacity: 1; }
+	}
+
+	@media (max-width: 560px) {
+	    #giphot-modal-wrapper .actions {
+	        flex-direction: column;
+	    }
+	    #giphot-modal-wrapper .title {
+	        font-size: 1.2rem;
+	    }
+	    #giphot-modal-wrapper .text h3 {
+	        font-size: 1rem;
+	        margin: 1rem 0 0.5rem;
+	    }
+	}
+	</style>
+
+	<div id="giphot-modal-wrapper" style="display: none;">
+	    <div class="backdrop" aria-hidden="true"></div>
+	    <div class="modal" role="dialog" aria-modal="true">
+	        <div class="modal-header">
+	            <h2 class="title">Ты на GipHot</h2>
+	        </div>
+	        <div class="text-container">
+	            <div class="text">
+	                <p><strong>GipHot НЕ GitHub и НЕ пытается его спиздить</strong></p>
+
+	                <h3>Правила:</h3>
+	                <ol>
+	                    <li>НЕ кидать ничего незаконного</li>
+	                    <li>Костя треугольник хуеглот</li>
+	                    <li>НЕ быть агентом микрослопа</li>
+	                    <li>НЕ пользоваться харамными технологиями (автодетект есть!!!)</li>
+	                    <li>Da</li>
+	                </ol>
+
+	                <h3>Условия:</h3>
+	                <ol>
+	                    <li>Отдать свои данные узбеку в ташкент</li>
+	                    <li>Создать акваунт <strong>ПОЛНОСТЬЮ БЕСПЛАТНО БЕЗ РЕГИСТРАЦИИ НА ПОРНО САЙТАХ</strong></li>
+	                    <li>Прославлять узбека</li>
+	                    <li>да и похуй</li>
+	                </ol>
+
+	                <h3>Контакты:</h3>
+	                <ul>
+	                    <li><strong>Саппорт:</strong> giphot@lutit.xyz <em>(не смотрю даже, нахуй надо)</em></li>
+	                    <li><strong>ТГ:</strong> @giphots</li>
+	                    <li><strong>Бот:</strong> @giphot_bot</li>
+	                </ul>
+	            </div>
+	        </div>
+	        <div class="modal-footer">
+	            <div class="actions">
+	                <button class="reset" type="button" id="giphot-btn-kostya">я костя</button>
+	                <button class="save" type="button" id="giphot-btn-ok">Ладно</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	<div id="giphot-toast-container"></div>
+
+	<script>
+	    document.addEventListener('DOMContentLoaded', function() {
+	        if (!localStorage.getItem('giphot-welcome-seen')) {
+	            document.getElementById('giphot-modal-wrapper').style.display = 'block';
+	        }
+
+	        function showKostyaToast() {
+	            const container = document.getElementById('giphot-toast-container');
+	            const toast = document.createElement('div');
+	            toast.className = 'giphot-toast';
+
+	            let seconds = 5;
+	            toast.textContent = 'ВЫ ОБИДЕЛИСЬ НА ПЛАГИН В УЗБЕКИУМЕ!!! ВЫХОД ЧЕРЕЗ: ' + seconds;
+	            container.appendChild(toast);
+
+	            document.getElementById('giphot-btn-kostya').disabled = true;
+	            document.getElementById('giphot-btn-ok').disabled = true;
+
+	            const interval = setInterval(function() {
+	                seconds--;
+	                if (seconds > 0) {
+	                    toast.textContent = 'ВЫ ОБИДЕЛИСЬ НА ПЛАГИН В УЗБЕКИУМЕ!!! ВЫХОД ЧЕРЕЗ: ' + seconds;
+	                } else {
+	                    clearInterval(interval);
+	                    toast.textContent = 'ВЫХОДИМ...';
+	                    window.location.href = 'about:blank';
+	                }
+	            }, 1000);
+	        }
+
+	        document.getElementById('giphot-btn-kostya').addEventListener('click', function(e) {
+	            e.preventDefault();
+	            showKostyaToast();
+	        });
+
+	        document.getElementById('giphot-btn-ok').addEventListener('click', function() {
+	            localStorage.setItem('giphot-welcome-seen', 'true');
+	            document.getElementById('giphot-modal-wrapper').style.display = 'none';
+	        });
+	    });
+	</script>
 </body>
 </html>
