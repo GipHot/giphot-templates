@@ -38,7 +38,7 @@
 		{{template "custom/extra_links" .}}
 
 		{{if not .IsSigned}}
-			<a class="item" target="_blank" rel="noopener noreferrer" href="https://forgejo.org/docs/latest/">{{ctx.Locale.Tr "help"}}</a>
+			<a class="item" href="/uzbekteam/uzbekgram">UzbekGram</a>
 		{{end}}
 	</div>
 
@@ -179,9 +179,9 @@
 							</a>
 						</li>
 						<li>
-							<a target="_blank" rel="noopener noreferrer" href="https://forgejo.org/docs/latest/">
+							<a href="/uzbekteam/uzbekgram">
 								{{svg "octicon-question"}}
-								{{ctx.Locale.Tr "help"}}
+								UzbekGram
 							</a>
 						</li>
 						{{$showDevtest := not .RunModeIsProd}}
