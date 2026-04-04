@@ -1,17 +1,132 @@
-<footer class="page-footer" role="group" aria-label="{{ctx.Locale.Tr "aria.footer"}}">
-	<div class="left-links" role="contentinfo" aria-label="{{ctx.Locale.Tr "aria.footer.software"}}">
-	</div>
-	<div class="right-links" role="group" aria-label="{{ctx.Locale.Tr "aria.footer.links"}}">
-		<div class="ui dropdown upward language">
-			<span class="flex-text-inline">{{svg "octicon-globe" 14}} {{ctx.Locale.LangName}}</span>
-			<div class="menu language-menu">
-				{{range .AllLangs}}
-					<a lang="{{.Lang}}" data-url="{{AppSubUrl}}/?lang={{.Lang}}" class="item {{if eq ctx.Locale.Lang .Lang}}active selected{{end}}">{{.Name}}</a>
-				{{end}}
+<footer class="page-footer giphot-footer" role="group" aria-label="{{ctx.Locale.Tr "aria.footer"}}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<style>
+		.giphot-footer {
+			background: #161b22 !important;
+			border-top: 1px solid #21262d !important;
+			padding: 1.5rem 3.5rem !important;
+			color: #9ca3af !important;
+			font-size: 0.8rem !important;
+			position: relative !important;
+			width: 100% !important;
+			clear: both !important;
+			z-index: 100 !important;
+		}
+		@media (max-width: 640px) {
+			.giphot-footer {
+				padding: 1.5rem 1rem !important;
+			}
+		}
+		.giphot-footer a {
+			color: #9ca3af !important;
+			text-decoration: none !important;
+			display: inline !important;
+			font-weight: normal !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+		.giphot-footer a:hover {
+			color: #ffffff !important;
+		}
+		.giphot-footer .giphot-inner {
+			max-width: 1400px !important;
+			margin: 0 auto !important;
+			display: flex !important;
+			align-items: center !important;
+			justify-content: space-between !important;
+			gap: 1rem 1.5rem !important;
+			width: 100% !important;
+		}
+		.giphot-footer .giphot-left {
+			display: flex !important;
+			flex-direction: column !important;
+			gap: 0.3rem !important;
+			min-width: 0 !important;
+		}
+		.giphot-footer .giphot-row {
+			display: flex !important;
+			flex-wrap: wrap !important;
+			align-items: center !important;
+			gap: 0.75rem !important;
+			line-height: 1.35 !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+		.giphot-footer .giphot-copyright {
+			color: #c9d1d9 !important;
+			white-space: nowrap !important;
+		}
+		.giphot-footer .giphot-right {
+			display: flex !important;
+			align-items: center !important;
+			gap: 0.6rem !important;
+			flex-shrink: 0 !important;
+			justify-content: flex-end !important;
+		}
+		.giphot-footer .giphot-social {
+			display: flex !important;
+			align-items: center !important;
+			gap: 0.4rem !important;
+		}
+		.giphot-footer .giphot-icon {
+			width: 30px !important;
+			height: 30px !important;
+			border: 1px solid rgba(255, 255, 255, 0.12) !important;
+			border-radius: 999px !important;
+			display: grid !important;
+			place-items: center !important;
+			color: #c9d1d9 !important;
+			font-size: 1.05rem !important;
+			background: rgba(255, 255, 255, 0.02) !important;
+			transition: all 0.2s ease !important;
+		}
+		.giphot-footer .giphot-icon:hover {
+			color: #ffffff !important;
+			border-color: rgba(255, 255, 255, 0.3) !important;
+			background: rgba(255, 255, 255, 0.08) !important;
+		}
+		.giphot-footer .giphot-icon i {
+			line-height: 1 !important;
+			display: block !important;
+		}
+		@media (max-width: 960px) {
+			.giphot-footer .giphot-inner {
+				flex-direction: column !important;
+				align-items: stretch !important;
+			}
+			.giphot-footer .giphot-right {
+				justify-content: space-between !important;
+			}
+		}
+		@media (max-width: 640px) {
+			.giphot-footer .giphot-right {
+				flex-direction: column !important;
+				align-items: flex-start !important;
+			}
+		}
+	</style>
+
+	<div class="giphot-inner">
+		<div class="giphot-left">
+			<div class="giphot-row">
+				<span class="giphot-copyright">© 2026 GipHot, Inc.</span>
+				<a href="/tos">Terms</a>
+				<a href="/privacy-policy">Privacy (Updated 02/2024)</a>
+				<a href="/sitemap">Sitemap</a>
+				<a href="https://github.com/git-guides" target="_blank" rel="noopener noreferrer">What is Git?</a>
+				<a href="#" onclick="event.preventDefault(); document.getElementById('giphot-modal-wrapper').style.display='block';">любимый попап кости</a>
 			</div>
 		</div>
-		<a href="{{AssetUrlPrefix}}/licenses.txt">{{ctx.Locale.Tr "licenses"}}</a>
-		{{if .EnableSwagger}}<a href="{{AppSubUrl}}/api/swagger">API</a>{{end}}
-		{{template "custom/extra_links_footer" .}}
+
+		<div class="giphot-right">
+			<div class="giphot-social" aria-label="Social links">
+				<a class="giphot-icon" href="https://t.me/giphot" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+					<i class="bi bi-telegram" aria-hidden="true"></i>
+				</a>
+				<a class="giphot-icon" href="https://github.com/GipHot" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+					<i class="bi bi-github" aria-hidden="true"></i>
+				</a>
+			</div>
+		</div>
 	</div>
 </footer>
