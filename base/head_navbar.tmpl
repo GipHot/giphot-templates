@@ -9,7 +9,7 @@
 		<a class="item" id="navbar-logo" href="{{AppSubUrl}}/" aria-label="{{if .IsSigned}}{{ctx.Locale.Tr "dashboard"}}{{else}}{{ctx.Locale.Tr "home"}}{{end}}">
 			<img width="30" height="30" src="{{AssetUrlPrefix}}/img/logo.svg" alt="{{ctx.Locale.Tr "logo"}}" aria-hidden="true">
 		</a>
-		<a class="item" href="{{AppSubUrl}}/">Home</a>
+		<a class="item" href="{{AppSubUrl}}/">{{ctx.Locale.Tr "home"}}</a>
 
 		<!-- mobile right menu, it must be here because in mobile view, each item is a flex column, the first item is a full row column -->
 		<div class="ui secondary menu item navbar-mobile-right only-mobile">
