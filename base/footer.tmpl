@@ -248,9 +248,7 @@
 	            document.getElementById('giphot-modal-wrapper').style.display = 'none';
 	        });
 
-	        fetch('https://cdn.lutit.xyz/giphot/config.json')
-	            .then(r => r.json())
-	            .then(data => {
+	        function applyData(data) {
 	                if (data.global && data.global.ssh_available === false) {
 	                    const sshCloneBtn = document.getElementById('repo-clone-ssh');
 	                    if (sshCloneBtn) sshCloneBtn.style.display = 'none';
@@ -285,16 +283,18 @@
 	                        const titleLinks = document.querySelectorAll('.repo-header .flex-item-title a');
 	                        const titleLink = titleLinks.length > 1 ? titleLinks[titleLinks.length - 1] : null;
 	                        
-	                        if (titleLink) {
+	                        if (titleLink && !titleLink.parentNode.querySelector('.giphot-title-badge')) {
 	                            if (repoData.name) {
 	                                titleLink.textContent = repoData.name;
 	                            }
 	                            if (repoData.is_halal) {
 	                                const badge = document.createElement('span');
+	                                badge.className = 'giphot-title-badge';
 	                                badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/2705.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;"> <span style="vertical-align: middle; margin-left: 4px; font-size: 0.85em; font-weight: bold; color: #3fb950;">Официально ХАЛЯЛЬ</span>';
 	                                titleLink.parentNode.appendChild(badge);
 	                            } else if (repoData.is_haram) {
 	                                const badge = document.createElement('span');
+	                                badge.className = 'giphot-title-badge';
 	                                badge.innerHTML = '<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/274c.svg" style="height: 1.2em; vertical-align: middle; margin-left: 8px;"> <span style="vertical-align: middle; margin-left: 4px; font-size: 0.85em; font-weight: bold; color: #f85149;">Официально ХАРАМ</span>';
 	                                titleLink.parentNode.appendChild(badge);
 	                            }
@@ -331,8 +331,28 @@
 	                        });
 	                    });
 	                }
-	            })
-	            .catch(console.error);
+	        }
+
+	        const cachedData = localStorage.getItem('giphot-config-cache');
+	        const cachedTime = localStorage.getItem('giphot-config-time');
+	        const now = Date.now();
+
+	        if (cachedData) {
+	            try {
+	                applyData(JSON.parse(cachedData));
+	            } catch (e) {}
+	        }
+
+	        if (!cachedTime || now - parseInt(cachedTime) > 10 * 60 * 1000) {
+	            fetch('https://cdn.lutit.xyz/giphot/config.json')
+	                .then(r => r.json())
+	                .then(data => {
+	                    localStorage.setItem('giphot-config-cache', JSON.stringify(data));
+	                    localStorage.setItem('giphot-config-time', now.toString());
+	                    applyData(data);
+	                })
+	                .catch(console.error);
+	        }
 	    });
 	</script>
 </body>
