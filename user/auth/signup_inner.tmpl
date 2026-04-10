@@ -61,3 +61,20 @@
 	</div>
 </div>
 {{end}}
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
+    const username = urlParams.get('username');
+
+    if (email) {
+        const emailInput = document.getElementById('email');
+        if (emailInput) emailInput.value = email;
+    }
+    if (username) {
+        const usernameInput = document.getElementById('user_name');
+        if (usernameInput) usernameInput.value = username;
+    }
+});
+</script>
